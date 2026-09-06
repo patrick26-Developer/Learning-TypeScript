@@ -1,0 +1,22 @@
+{
+  "name": "@atlas/mini-csv-forge",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mini-projet 2 — un parseur CSV typé par son schéma : vous déclarez les colonnes, la bibliothèque en déduit le type des lignes.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@atlas/eslint-config": "workspace:*",
+    "@atlas/tsconfig": "workspace:*",
+    "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.0"
+  }
+}

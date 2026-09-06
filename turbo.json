@@ -1,0 +1,53 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+
+  "globalDependencies": ["tsconfig.base.json", "packages/tsconfig/base.json", ".env.example"],
+
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", "build/**", ".next/**", "!.next/cache/**"]
+    },
+
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": ["*.tsbuildinfo"]
+    },
+
+    "lint": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+
+    // Vérifie les CORRIGÉS des modules de cours, indépendamment de l'état
+    // (forcément non résolu, au moins en partie) des exercices d'un dépôt
+    // fraîchement cloné. Voir AUD-014 dans le journal d'audit. Turbo
+    // n'exécute cette tâche que dans les paquets qui la déclarent : les
+    // paquets sans notion de « corrigé » (contracts, projets…) sont ignorés
+    // sans erreur.
+    "test:solutions": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+
+    "test:watch": {
+      "cache": false,
+      "persistent": true
+    },
+
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+
+    "clean": {
+      "cache": false
+    }
+  }
+}

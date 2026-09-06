@@ -1,0 +1,54 @@
+{
+  // ---------------------------------------------------------------------
+  // Utiliser le TypeScript DU PROJET, jamais celui embarqué par VS Code.
+  // Sans ce réglage, l'éditeur peut afficher des erreurs qui n'existent
+  // pas (ou en cacher qui existent) selon la version qu'il embarque.
+  // C'est le problème n°1 rencontré par les débutants — voir la page
+  // d'installation du site.
+  // ---------------------------------------------------------------------
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // Formatage à la sauvegarde, par Prettier plutôt que le formateur intégré.
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
+  },
+
+  // ESLint : flat config, et validation sur tous les langages du dépôt.
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
+  // Un fichier par langage : évite que Prettier tente de formater un JSON
+  // avec les réglages TypeScript, par exemple.
+  "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": { "comments": false, "strings": false, "other": true }
+  },
+
+  // Confort : montre les paramètres inférés, les types de retour…
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.variableTypes.enabled": false,
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+
+  // Ne pas explorer/rechercher dans les artefacts générés.
+  "files.exclude": {
+    "**/.turbo": true,
+    "**/*.tsbuildinfo": true
+  },
+  "search.exclude": {
+    "**/dist": true,
+    "**/build": true,
+    "**/.docusaurus": true,
+    "**/coverage": true,
+    "pnpm-lock.yaml": true
+  }
+}

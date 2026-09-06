@@ -1,0 +1,10 @@
+{
+  "label": "Partie II — Structurer le code",
+  "position": 20,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Partie II — Structurer le code",
+    "description": "Passer du script au logiciel : interfaces et classes, génériques, narrowing avancé, modules et déclarations. À la fin de cette partie, vous construisez un parseur CSV typé par son schéma."
+  }
+}

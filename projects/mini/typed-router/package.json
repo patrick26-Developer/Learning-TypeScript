@@ -1,0 +1,21 @@
+{
+  "name": "@atlas/mini-typed-router",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mini-projet 3 — un routeur qui déduit les paramètres nommés d'une route depuis sa chaîne d'URL.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@atlas/eslint-config": "workspace:*",
+    "@atlas/tsconfig": "workspace:*",
+    "@types/node": "^26.4.1",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.0"
+  }
+}

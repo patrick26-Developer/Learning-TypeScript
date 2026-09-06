@@ -1,0 +1,174 @@
+/* ==========================================================================
+   Page d'accueil — styles locaux.
+   Fichier `.module.css` : les noms de classe sont automatiquement rendus
+   uniques à la compilation. Aucun risque de collision avec le thème.
+   ========================================================================== */
+
+/* --- Bandeau d'accroche ------------------------------------------------- */
+.hero {
+  padding: 5rem 0 4rem;
+  text-align: center;
+  background: linear-gradient(160deg, var(--ifm-background-surface-color), transparent);
+  border-bottom: 1px solid var(--atlas-border);
+}
+
+.heroTitle {
+  font-size: clamp(2.2rem, 6vw, 3.8rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.heroSubtitle {
+  font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+  max-width: 46rem;
+  margin: 0 auto 2.5rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.heroButtons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* --- Bandeau de chiffres ------------------------------------------------ */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+  max-width: 60rem;
+  margin: 3rem auto 0;
+  padding: 0 1rem;
+}
+
+.stat {
+  text-align: center;
+}
+
+.statValue {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--ifm-color-primary);
+  line-height: 1;
+}
+
+.statLabel {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* --- Sections génériques ------------------------------------------------ */
+.section {
+  padding: 4rem 0;
+}
+
+.sectionAlt {
+  background-color: var(--atlas-surface);
+  border-block: 1px solid var(--atlas-border);
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  margin-bottom: 0.75rem;
+}
+
+.sectionLead {
+  text-align: center;
+  max-width: 44rem;
+  margin: 0 auto 3rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* --- Grille de cartes --------------------------------------------------- */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  padding: 1.75rem;
+  border: 1px solid var(--atlas-border);
+  border-radius: 12px;
+  background-color: var(--ifm-background-color);
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--ifm-color-primary);
+}
+
+.cardIcon {
+  font-size: 1.9rem;
+  line-height: 1;
+  margin-bottom: 0.85rem;
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+}
+
+.cardText {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* --- Aperçu du programme ------------------------------------------------ */
+.track {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.15rem 0;
+  border-bottom: 1px dashed var(--atlas-border);
+}
+
+.track:last-child {
+  border-bottom: none;
+}
+
+.trackBadge {
+  flex: 0 0 auto;
+  min-width: 5.5rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  background-color: var(--ifm-color-primary);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.trackBody strong {
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.trackBody span {
+  color: var(--ifm-color-emphasis-700);
+  font-size: 0.93rem;
+}
+
+/* --- Appel à l'action final --------------------------------------------- */
+.finalCta {
+  text-align: center;
+  padding: 4.5rem 1rem;
+}
+
+.finalCta p {
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+  color: var(--ifm-color-emphasis-700);
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Atlas — paquet de cours (exercices + solutions)",
+
+  // Voir la note dans node.json : l'extends doit rester un fichier FRÈRE,
+  // jamais remonter hors du paquet, à cause de la résolution des liens
+  // symboliques par certains outils (AUD-010).
+  "extends": "./base.json",
+
+  // Aucun chemin relatif ici (include, exclude…) : voir la note détaillée
+  // dans node.json et AUD-010 dans le journal d'audit. Chaque module de
+  // cours déclare lui-même son "include" dans son propre tsconfig.json.
+  "compilerOptions": {
+    "types": ["node"],
+
+    // Un paquet de cours n'est jamais compilé vers du JavaScript : il est
+    // exécuté directement par Vitest / tsx. On ne veut que la vérification
+    // de types, pas d'artefact.
+    "noEmit": true,
+
+    // ---------------------------------------------------------------------
+    // ASSOUPLISSEMENTS VOLONTAIRES, ET UNIQUEMENT ICI
+    // ---------------------------------------------------------------------
+    // Un énoncé d'exercice contient des squelettes à compléter :
+    //
+    //   export function sum(a: number, b: number): number {
+    //     // TODO: implémenter
+    //     throw new Error('Not implemented');
+    //   }
+    //
+    // Avec noUnusedParameters, `a` et `b` déclencheraient une erreur AVANT
+    // même que l'apprenant ait commencé. On désactive donc ces deux règles
+    // dans les paquets de cours — et nulle part ailleurs dans le dépôt.
+    "noUnusedLocals": false,
+    "noUnusedParameters": false
+  }
+}

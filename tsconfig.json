@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  // Projet TypeScript par défaut de la racine du dépôt.
+  //
+  // Son rôle est double :
+  //  1. couvrir les fichiers qui ne vivent dans aucun paquet (scripts, probes) ;
+  //  2. donner à ESLint (`projectService`) un projet de repli pour tout
+  //     fichier TypeScript non rattaché à un tsconfig plus spécifique.
+  //     Sans lui, le lint type-aware échouerait sur ces fichiers.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["node"],
+    "noEmit": true
+  },
+  "include": ["scripts/**/*.ts", "*.ts", "*.mts"]
+}

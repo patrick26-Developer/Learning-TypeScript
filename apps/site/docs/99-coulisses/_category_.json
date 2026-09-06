@@ -1,0 +1,10 @@
+{
+  "label": "Coulisses & Audit",
+  "position": 99,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Coulisses & Audit",
+    "description": "Comment ce dépôt est construit, et pourquoi. Chaque décision technique y est datée, justifiée et contestable. C'est aussi un support pédagogique : lire un vrai journal d'architecture fait partie du métier."
+  }
+}

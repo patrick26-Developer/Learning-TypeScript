@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Atlas — application Node.js (API, CLI, scripts)",
+
+  // Hérite de toute la rigueur définie dans ce même paquet.
+  //
+  // IMPORTANT : "./base.json" et non "../../tsconfig.base.json". Ce fichier
+  // est presque toujours atteint via le lien symbolique
+  // node_modules/@atlas/tsconfig/node.json plutôt que via son chemin réel.
+  // Un `extends` relatif qui "remonte" (`../..`) est résolu par certains
+  // outils (le transformateur oxc de Vite 8, notamment) par rapport au
+  // chemin APPARENT du lien, pas par rapport au fichier réel — il sortirait
+  // alors du paquet et ne trouverait rien. Rester sur un fichier FRÈRE, dans
+  // le même dossier, élimine le problème : voir AUD-010 dans le journal
+  // d'audit.
+  "extends": "./base.json",
+
+  // -------------------------------------------------------------------------
+  // AUCUN CHEMIN RELATIF DANS CE FICHIER — ET C'EST VOLONTAIRE.
+  //
+  // TypeScript résout tout chemin relatif (rootDir, outDir, include,
+  // exclude, baseUrl…) par rapport à l'emplacement du fichier QUI LE
+  // DÉCLARE, jamais par rapport au projet qui fait `extends`. Si ce fichier
+  // partagé déclarait "rootDir": "src", ce serait
+  // packages/tsconfig/src/ qui serait cherché — pas le `src/` du paquet
+  // consommateur. Voir AUD-010 dans le journal d'audit.
+  //
+  // Chaque paquet qui utilise cette configuration DOIT déclarer lui-même,
+  // dans son propre tsconfig.json : rootDir, outDir, include, exclude.
+  // -------------------------------------------------------------------------
+  "compilerOptions": {
+    // Rend disponibles les types globaux de Node (process, Buffer, __dirname…).
+    // On les déclare EXPLICITEMENT plutôt que de laisser TypeScript charger
+    // tout ce qu'il trouve dans node_modules/@types : on maîtrise ainsi
+    // exactement quels globaux existent.
+    // "types" n'est PAS un chemin de fichier mais un nom de paquet : sa
+    // résolution remonte l'arborescence des node_modules depuis ce fichier,
+    // ce qui retrouve sans problème le @types/node installé à la racine.
+    "types": ["node"]
+  }
+}

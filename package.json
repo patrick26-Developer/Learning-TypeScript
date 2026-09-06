@@ -1,0 +1,51 @@
+{
+  "name": "typescript-atlas",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript Atlas — formation complète de A à Z : du premier `let` à l'architecture d'API de production. Bilingue FR/EN.",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.11.0",
+  "engines": {
+    "node": ">=22.12.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "site:dev": "pnpm --filter @atlas/site start",
+    "site:build": "pnpm --filter @atlas/site build",
+    "site:serve": "pnpm --filter @atlas/site serve",
+
+    "build": "turbo run build",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch",
+    "test:solutions": "turbo run test:solutions",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint -- --fix",
+
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+
+    "verify": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test",
+
+    "verify:content": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:solutions",
+
+    "audit:deps": "pnpm audit --audit-level=moderate",
+    "audit:log": "node scripts/audit-log.mjs",
+    "audit:structure": "node scripts/check-structure.mjs",
+
+    "clean": "turbo run clean && node scripts/clean.mjs",
+    "doctor": "node scripts/doctor.mjs"
+  },
+  "devDependencies": {
+    "@atlas/eslint-config": "workspace:*",
+    "@atlas/tsconfig": "workspace:*",
+    "@types/node": "^26.4.1",
+    "eslint": "^10.10.0",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.12",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.69.0",
+    "vitest": "^5.0.0"
+  }
+}

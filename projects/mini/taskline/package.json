@@ -1,0 +1,23 @@
+{
+  "name": "@atlas/mini-taskline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Mini-projet 1 — gestionnaire de tâches en ligne de commande, sans aucune dépendance externe.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@atlas/eslint-config": "workspace:*",
+    "@atlas/tsconfig": "workspace:*",
+    "@types/node": "^26.4.1",
+    "tsx": "^4.23.13",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.0"
+  }
+}

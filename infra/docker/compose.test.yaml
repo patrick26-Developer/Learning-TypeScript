@@ -1,0 +1,36 @@
+# -----------------------------------------------------------------------------
+# Infrastructure de TEST — base de données jetable pour les tests d'intégration
+# (module 13 et module 16).
+#
+# Différences volontaires avec compose.dev.yaml :
+#   - `tmpfs` : les données vivent en RAM, jamais sur disque. Chaque run de
+#     test démarre sur une base VRAIMENT vide, sans étape de nettoyage.
+#   - Port différent (55432) : peut tourner EN PARALLÈLE de l'environnement
+#     de développement, sans conflit.
+#
+# Usage :
+#   docker compose -f infra/docker/compose.test.yaml up -d --wait
+#   pnpm --filter @atlas/api test:integration
+#   docker compose -f infra/docker/compose.test.yaml down
+# -----------------------------------------------------------------------------
+name: atlas-test
+
+services:
+  postgres-test:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: atlas_test
+      POSTGRES_PASSWORD: atlas_test
+      POSTGRES_DB: atlas_test
+      # Accélère les tests : la durabilité des données n'a aucune valeur
+      # sur une base qui sera détruite dans la minute.
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - '127.0.0.1:55432:5432'
+    tmpfs:
+      - /var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U atlas_test -d atlas_test']
+      interval: 2s
+      timeout: 3s
+      retries: 15

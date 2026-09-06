@@ -1,0 +1,35 @@
+# ---------------------------------------------------------------------------
+# pnpm workspaces — déclare quels dossiers sont des paquets du monorepo.
+# Chaque glob ci-dessous est résolu au moment du `pnpm install`.
+# Réf. : https://pnpm.io/pnpm-workspace_yaml
+# ---------------------------------------------------------------------------
+packages:
+  # Le site de formation (Docusaurus 3, bilingue FR/EN).
+  - 'apps/*'
+  # Bibliothèques internes partagées (configs, kit d'exercices, contrats d'API).
+  - 'packages/*'
+  # Le code des modules de cours : énoncés d'exercices + solutions + tests.
+  - 'courses/*'
+  # Les mini-projets guidés (un paquet autonome par mini-projet).
+  - 'projects/mini/*'
+  # Les trois grands projets finaux (chacun est lui-même un sous-monorepo).
+  - 'projects/capstones/*/*'
+  # Laboratoires expérimentaux, volontairement isolés du build principal
+  # (ex. : TypeScript 7 natif) pour ne jamais casser la formation.
+  - 'labs/*'
+
+# ---------------------------------------------------------------------------
+# pnpm 10 bloque par défaut les scripts d'installation (postinstall) des
+# dépendances : c'est une protection contre les attaques de chaîne
+# d'approvisionnement (supply chain). On autorise explicitement, une par une,
+# les seules dépendances qui en ont légitimement besoin.
+# C'est LE réflexe de sécurité enseigné au module 11.
+# ---------------------------------------------------------------------------
+onlyBuiltDependencies:
+  - esbuild
+  - '@swc/core'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - prisma
+  - sharp
+  - unrs-resolver

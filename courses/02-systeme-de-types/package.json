@@ -1,0 +1,21 @@
+{
+  "name": "@atlas/course-02",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Module 02 — Le système de types : primitifs, inférence, narrowing.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:solutions": "vitest run --config vitest.solutions.config.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@atlas/eslint-config": "workspace:*",
+    "@atlas/tsconfig": "workspace:*",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.0"
+  }
+}

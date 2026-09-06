@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "TypeScript Atlas — configuration de base (stricte, sans compromis)",
+
+  "compilerOptions": {
+    // =======================================================================
+    // 1. CIBLE ET MODULES
+    // =======================================================================
+
+    // Version de JavaScript produite. ES2023 est supportée par Node 22+ et
+    // tous les navigateurs modernes : pas de transpilation inutile, donc
+    // moins de code généré et des stack traces lisibles.
+    "target": "ES2023",
+
+    // Bibliothèques de types globales disponibles (Array.at, structuredClone…).
+    "lib": ["ES2023"],
+
+    // "nodenext" fait respecter à TypeScript les VRAIES règles de résolution
+    // de Node.js : le champ "type" du package.json, les extensions
+    // obligatoires en ESM, les champs "exports". C'est le seul réglage qui
+    // garantit que ce qui compile fonctionnera réellement à l'exécution.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+
+    // =======================================================================
+    // 2. RIGUEUR — LE CŒUR DE LA FORMATION
+    // =======================================================================
+
+    // Active d'un coup : noImplicitAny, strictNullChecks, strictFunctionTypes,
+    // strictBindCallApply, strictPropertyInitialization, noImplicitThis,
+    // useUnknownInCatchVariables, alwaysStrict.
+    "strict": true,
+
+    // Interdit d'accéder à une propriété d'index sans vérifier son existence.
+    //   const a: string[] = [];
+    //   a[0].toUpperCase();   // ❌ 'a[0]' est possiblement 'undefined'
+    // Coûteux en confort, inestimable en fiabilité : supprime toute une
+    // famille de "TypeError: cannot read property of undefined" en production.
+    "noUncheckedIndexedAccess": true,
+
+    // Distingue « propriété absente » de « propriété présente valant undefined ».
+    //   type T = { a?: string };
+    //   const t: T = { a: undefined };  // ❌ refusé : a est optionnelle, pas nullable
+    // Indispensable dès qu'on sérialise vers JSON ou une base de données.
+    "exactOptionalPropertyTypes": true,
+
+    // Force le traitement explicite de TOUS les cas d'un switch.
+    "noFallthroughCasesInSwitch": true,
+
+    // Une fonction typée comme retournant une valeur doit retourner sur
+    // tous ses chemins d'exécution.
+    "noImplicitReturns": true,
+
+    // Interdit de surcharger une méthode parente sans le mot-clé `override` :
+    // protège contre les renommages silencieux dans les hiérarchies de classes.
+    "noImplicitOverride": true,
+
+    // Signale les variables et paramètres jamais utilisés (préfixer par `_`
+    // pour déclarer une non-utilisation intentionnelle).
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+
+    // Interdit l'accès par point à une propriété déclarée via un index
+    // signature : oblige `obj["clef"]`, ce qui rend visible l'incertitude.
+    "noPropertyAccessFromIndexSignature": true,
+
+    // =======================================================================
+    // 3. INTEROPÉRABILITÉ ET ÉMISSION
+    // =======================================================================
+
+    // Chaque fichier est compilable isolément (requis par esbuild, SWC, Vite,
+    // Babel — donc par tout l'outillage moderne).
+    "isolatedModules": true,
+
+    // Oblige à écrire `import type { X }` quand seul le TYPE est utilisé.
+    // Garantit qu'aucun import ne survit inutilement au runtime : moins de
+    // dépendances circulaires, bundles plus légers, effets de bord maîtrisés.
+    "verbatimModuleSyntax": true,
+
+    // Autorise `import express from "express"` sur les modules CommonJS.
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+
+    // La casse des noms de fichiers doit correspondre exactement.
+    // Windows/macOS sont insensibles à la casse, Linux (donc la CI et la
+    // production) ne l'est pas. Ce réglage évite le classique
+    // « ça marche chez moi ».
+    "forceConsistentCasingInFileNames": true,
+
+    // =======================================================================
+    // 4. QUALITÉ DE VIE
+    // =======================================================================
+
+    // Cartes de correspondance : les erreurs pointent vers le .ts d'origine,
+    // pas vers le .js compilé.
+    "sourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
+
+    // Ne re-typecheck pas le contenu de node_modules à chaque build.
+    "skipLibCheck": true,
+
+    // Détecte les identifiants inaccessibles / le code mort.
+    "allowUnreachableCode": false,
+    "allowUnusedLabels": false
+  },
+
+  "exclude": ["node_modules", "dist", "build", "coverage", ".turbo"]
+}

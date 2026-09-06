@@ -1,0 +1,24 @@
+{
+  // Docusaurus fournit sa propre configuration de base : elle sait déjà gérer
+  // le JSX, les alias `@site/*`, `@theme/*` et les modules CSS.
+  // On NE part PAS de tsconfig.base.json ici : le site est une application
+  // React bundlée, pas un paquet Node compilé par `tsc`.
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    // `@docusaurus/tsconfig` — un paquet TIERS, non modifiable ici — déclare
+    // encore `baseUrl`, déprécié depuis TypeScript 6.0 (retrait prévu en
+    // 7.0). Le silencer explicitement, de la façon documentée par TypeScript
+    // lui-même, plutôt que de dupliquer toute la configuration Docusaurus
+    // pour éviter un seul réglage hors de notre contrôle.
+    "ignoreDeprecations": "6.0",
+
+    // Depuis TypeScript 4.1, `paths` fonctionne seul, résolu relativement à
+    // l'emplacement de CE fichier — `baseUrl` n'est plus nécessaire pour ce
+    // cas d'usage, indépendamment de sa dépréciation.
+    "paths": {
+      "@site/*": ["./*"]
+    }
+  },
+  "include": [".docusaurus/**/*", "src/**/*", "*.ts"],
+  "exclude": ["build", ".docusaurus/client-modules.js"]
+}

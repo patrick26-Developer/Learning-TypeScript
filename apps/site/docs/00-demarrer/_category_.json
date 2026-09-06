@@ -1,0 +1,10 @@
+{
+  "label": "Démarrer ici",
+  "position": 1,
+  "collapsed": false,
+  "link": {
+    "type": "generated-index",
+    "title": "Démarrer ici",
+    "description": "Avant d'écrire la première ligne de TypeScript : comprendre le parcours, savoir comment travailler, et choisir votre point d'entrée."
+  }
+}

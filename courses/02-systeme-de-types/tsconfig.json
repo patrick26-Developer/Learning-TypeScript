@@ -1,0 +1,5 @@
+{
+  "extends": "@atlas/tsconfig/exercises.json",
+  "include": ["exercises/**/*.ts", "solutions/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
+}

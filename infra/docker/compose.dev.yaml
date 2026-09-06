@@ -1,0 +1,66 @@
+# -----------------------------------------------------------------------------
+# Infrastructure de DÉVELOPPEMENT — module 14 et suivants.
+#
+# Ce fichier ne construit AUCUNE image applicative : il ne fournit que les
+# services dont l'API a besoin pour tourner en local (base de données, cache).
+# L'API elle-même s'exécute directement sur la machine hôte (pnpm --filter …
+# dev), pour profiter du rechargement à chaud — un conteneur applicatif
+# rebuild à chaque changement serait beaucoup plus lent en développement.
+#
+# Usage :
+#   docker compose -f infra/docker/compose.dev.yaml up -d
+#   docker compose -f infra/docker/compose.dev.yaml down        # garde les données
+#   docker compose -f infra/docker/compose.dev.yaml down -v     # efface tout
+# -----------------------------------------------------------------------------
+name: atlas-dev
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      # Identifiants de DÉVELOPPEMENT uniquement — jamais utilisés en
+      # production, où les secrets viennent d'un gestionnaire dédié
+      # (voir apps/site/docs pour le module 18).
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: atlas_dev_only
+      POSTGRES_DB: atlas_dev
+    ports:
+      - '127.0.0.1:5432:5432'
+    volumes:
+      - atlas_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U atlas -d atlas_dev']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:8-alpine
+    restart: unless-stopped
+    command: ['redis-server', '--save', '60', '1', '--appendonly', 'yes']
+    ports:
+      - '127.0.0.1:6379:6379'
+    volumes:
+      - atlas_redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Interface web pour inspecter la base de données sans installer d'outil
+  # local. Facultatif : commentez ce service si vous préférez un client
+  # de bureau (TablePlus, DBeaver…).
+  adminer:
+    image: adminer:5-standalone
+    restart: unless-stopped
+    ports:
+      - '127.0.0.1:8081:8080'
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  atlas_postgres_data:
+  atlas_redis_data:

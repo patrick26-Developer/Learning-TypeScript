@@ -1,0 +1,23 @@
+{
+  "name": "@atlas/eslint-config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configurations ESLint partagées (flat config, type-aware).",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    "./base": "./base.mjs",
+    "./node": "./node.mjs"
+  },
+  "files": ["*.mjs"],
+  "peerDependencies": {
+    "eslint": "^10.0.0",
+    "typescript": ">=5.5.0 <6.1.0"
+  },
+  "dependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.12.0",
+    "typescript-eslint": "^8.69.0"
+  }
+}

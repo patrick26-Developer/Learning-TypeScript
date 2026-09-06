@@ -1,0 +1,11 @@
+{
+  "name": "@atlas/tsconfig",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configurations TypeScript partagées par tout le monorepo.",
+  "license": "MIT",
+  "files": ["*.json"],
+  "publishConfig": {
+    "access": "restricted"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "TypeScript Atlas — alias racine de la configuration stricte",
+
+  // La configuration réelle vit dans packages/tsconfig/base.json : c'est un
+  // paquet du workspace, chargeable par `extends: "@atlas/tsconfig/base.json"`
+  // depuis N'IMPORTE QUEL paquet du monorepo, y compris à travers le lien
+  // symbolique `node_modules/@atlas/tsconfig`.
+  //
+  // POURQUOI CE FICHIER EXISTE QUAND MÊME À LA RACINE
+  // Certains outils (Turborepo, l'extension TypeScript de VS Code ouverte à
+  // la racine) s'attendent à trouver un `tsconfig.base.json` au niveau
+  // supérieur. On le garde comme simple alias, à un seul niveau
+  // d'indirection, plutôt que de dupliquer la configuration.
+  "extends": "@atlas/tsconfig/base.json"
+}

@@ -1,0 +1,18 @@
+# Force LF partout, indépendamment du système d'exploitation du contributeur.
+# Un dépôt à fins de formation ne doit jamais produire de diff dû uniquement
+# à une différence de fin de ligne entre Windows et Unix.
+* text=auto eol=lf
+
+# Fichiers binaires : jamais de conversion de fin de ligne, jamais de diff textuel.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+
+# Le lockfile est généré : on le laisse hors des diffs "linguist" par défaut
+# de GitHub, mais on le garde suivi (il n'est pas dans .gitignore).
+pnpm-lock.yaml -diff

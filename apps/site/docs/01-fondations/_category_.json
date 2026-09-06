@@ -1,0 +1,10 @@
+{
+  "label": "Partie I — Origines & Fondations",
+  "position": 10,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Partie I — Origines & Fondations",
+    "description": "Comprendre pourquoi TypeScript existe, puis manipuler son système de types de base sans jamais écrire `any`. À la fin de cette partie, vous réalisez votre premier projet : une application en ligne de commande sans aucune dépendance externe."
+  }
+}

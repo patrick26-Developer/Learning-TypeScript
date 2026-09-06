@@ -1,0 +1,10 @@
+{
+  "label": "Partie III — Le niveau expert du typage",
+  "position": 30,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Partie III — Le niveau expert du typage",
+    "description": "Cesser de décrire les types, commencer à les calculer — puis sécuriser tout ce que le système de types ne peut pas garantir seul. À la fin de cette partie, vous construisez un routeur qui déduit ses paramètres depuis une chaîne d'URL."
+  }
+}

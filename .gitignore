@@ -1,0 +1,49 @@
+# --- Dépendances ------------------------------------------------------------
+node_modules/
+.pnpm-store/
+
+# --- Artefacts de compilation ----------------------------------------------
+dist/
+build/
+out/
+*.tsbuildinfo
+.turbo/
+
+# --- Frameworks -------------------------------------------------------------
+.next/
+.expo/
+.docusaurus/
+.vite/
+coverage/
+
+# --- Environnement (JAMAIS committé : secrets) ------------------------------
+.env
+.env.*
+!.env.example
+!.env.*.example
+
+# --- Bases de données locales ----------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+pgdata/
+
+# --- Outillage local ---------------------------------------------------------
+# État de session d'assistants IA (verrous, caches) : local à une machine,
+# jamais pertinent pour un autre contributeur.
+.claude/
+
+# --- Système / éditeur ------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.log
+npm-debug.log*
+pnpm-debug.log*
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# --- Rapports générés -------------------------------------------------------
+audit/reports/generated/

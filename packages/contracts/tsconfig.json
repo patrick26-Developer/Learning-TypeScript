@@ -1,0 +1,14 @@
+{
+  "extends": "@atlas/tsconfig/library.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "dist",
+    "tsBuildInfoFile": "dist/.tsbuildinfo"
+  },
+  // Les tests ne sont PAS inclus ici : `rootDir: "src"` exige que tout
+  // fichier du programme soit sous `src/`, et un test importe du code de
+  // production sans en faire partie. Le lint type-aware les couvre malgré
+  // tout via `allowDefaultProject` (packages/eslint-config/base.mjs).
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.spec.ts"]
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Atlas — bibliothèque interne partagée",
+
+  // Voir la note dans node.json : l'extends doit rester un fichier FRÈRE,
+  // jamais remonter hors du paquet, à cause de la résolution des liens
+  // symboliques par certains outils (AUD-010).
+  "extends": "./base.json",
+
+  // Aucun chemin relatif ici (rootDir, outDir, tsBuildInfoFile, include…) :
+  // voir la note détaillée dans node.json et AUD-010 dans le journal
+  // d'audit. Chaque bibliothèque consommatrice les déclare elle-même.
+  "compilerOptions": {
+    // `composite` active les "project references" de TypeScript : chaque
+    // bibliothèque est compilée une seule fois, et les paquets qui en
+    // dépendent réutilisent le résultat. C'est ce qui rend un gros monorepo
+    // rapide au lieu de recompiler le monde à chaque fois.
+    "composite": true,
+
+    // Une bibliothèque doit publier ses déclarations de types : c'est le
+    // contrat qu'elle offre à ses consommateurs.
+    "declaration": true,
+    "declarationMap": true
+  }
+}
