@@ -343,8 +343,7 @@ d'autres.**
 
 ## AUD-011 — `showLastUpdateTime` désactivé jusqu'au premier commit
 
-**2026-09-06** · Statut : `Provisoire` · Portée : site · Réversibilité : 🟢
-· Revue : **au premier commit du dépôt**
+**2026-09-06** · Statut : `Résolu` · Portée : site · Réversibilité : 🟢
 
 **Symptôme.** Le tout premier `pnpm --filter @atlas/site build`, exécuté dans
 un dépôt Git fraîchement initialisé (`git init`) mais sans aucun commit,
@@ -376,9 +375,13 @@ git commit -m "chore: commit initial du squelette TypeScript Atlas"
 Puis, dans `apps/site/docusaurus.config.ts`, repasser `showLastUpdateTime` à
 `true`.
 
-**Pourquoi `Provisoire` et non `Rejeté`.** La fonctionnalité reste jugée utile
-(AUD-006) ; elle est seulement suspendue le temps d'une condition préalable
-qui ne dépend pas de ce document.
+**Pourquoi `Provisoire` et non `Rejeté`, à l'origine.** La fonctionnalité
+restait jugée utile (AUD-006) ; elle n'était que suspendue le temps d'une
+condition préalable qui ne dépendait pas de ce document.
+
+**Résolution.** Le dépôt a été poussé vers
+[github.com/patrick26-Developer/Learning-TypeScript](https://github.com/patrick26-Developer/Learning-TypeScript)
+le 2026-09-06 (voir AUD-015). `showLastUpdateTime` est repassé à `true`.
 
 ---
 
@@ -564,6 +567,77 @@ plus personne ne regarde en conséquence.
 
 ---
 
+## AUD-015 — Publication réelle sur GitHub, et ce que ça a coûté
+
+**2026-09-06** · Statut : `Accepté` · Portée : dépôt entier, déploiement · Réversibilité : 🟡
+
+**Décision.** Le dépôt est publié publiquement sous
+[github.com/patrick26-Developer/Learning-TypeScript](https://github.com/patrick26-Developer/Learning-TypeScript).
+Le nom du dépôt (`Learning-TypeScript`) diffère du nom du projet
+(**TypeScript Atlas**, conservé partout comme titre, marque du site et nom du
+paquet racine) — c'est une décision assumée du propriétaire du dépôt, sans
+conséquence technique : `GITHUB_ORG`/`GITHUB_REPO` dans
+`docusaurus.config.ts` sont les deux seules constantes qui encodent ce nom.
+
+**Incidents réels rencontrés pendant la publication — et pourquoi ce
+paragraphe existe.** Une formation qui enseigne l'authentification Git et
+GitHub (modules à venir) gagne à documenter un cas réel plutôt qu'un
+exemple inventé.
+
+1. **Le flux d'authentification web de `gh` (`gh auth login --web`) a échoué
+   à répétition** avec deux symptômes distincts : `expired_token` (le code à
+   usage unique n'a pas été validé dans les ~15 minutes imparties) et une
+   erreur réseau de plus bas niveau (`dial tcp … connectex`) sur la requête
+   d'échange de jeton elle-même. Le second symptôme n'a **rien à voir** avec
+   une éventuelle lenteur humaine à valider le code : c'est une panne de
+   connexion transitoire, confirmée en constatant qu'une simple lecture HTTPS
+   non authentifiée (`git ls-remote`) réussissait pourtant instantanément au
+   même moment. **Leçon : un même symptôme apparent (« ça ne marche pas »)
+   peut avoir des causes totalement différentes ; le message d'erreur exact
+   fait toute la différence pour ne pas boucler sur le mauvais correctif.**
+
+2. **Un jeton fine-grained mal configuré produit un `403` silencieux**, sans
+   indiquer PAR QUOI la permission manque. La cause : la section
+   « Repository permissions → Contents → Read and write » n'avait pas été
+   correctement enregistrée (confondue avec la section voisine « Account
+   permissions », qui ne contrôle rien de pertinent pour un `git push`). Un
+   jeton **classique** avec le seul scope `repo` s'est révélé plus simple à
+   configurer sans erreur — une seule case à cocher, contre une hiérarchie de
+   permissions à deux niveaux pour le format fine-grained.
+
+3. **`gh auth login --with-token` a lui-même rejeté un jeton classique
+   valide** (`error validating token: missing required scope 'read:org'`) :
+   c'est une exigence de l'outil `gh` pour son propre usage (accès à
+   certaines API d'organisation), **indépendante** de ce dont `git push`
+   over HTTPS a réellement besoin. Contournement : authentifier `git`
+   directement, sans passer par `gh` — `git push
+https://<token>@github.com/…` pour l'opération ponctuelle, sans jamais
+   stocker le jeton dans `.git/config` (vérifié explicitement après coup).
+
+4. **Le dépôt distant contenait déjà un commit** (`LICENSE` généré
+   automatiquement par l'interface de création de GitHub), alors que le
+   dépôt local en avait déjà un autre, sans ancêtre commun. Résolu par
+   `git merge --allow-unrelated-histories`, jamais par `push --force` (qui
+   aurait effacé silencieusement l'historique distant) — **et l'opération a
+   dû être refaite une seconde fois** lorsque le dépôt cible a changé en
+   cours de route (`typescript-atlas` supprimé au profit de
+   `Learning-TypeScript`, un tout autre commit initial, sans lien avec le
+   premier).
+
+**Ce qui n'a, à l'inverse, jamais posé de problème :** la connectivité SSH
+(port 22) vers `github.com` a fonctionné correctement dès le premier essai —
+seule la clé n'était pas enregistrée sur le compte. Dans un environnement où
+HTTPS/443 se montre instable, SSH reste souvent l'alternative la plus fiable
+à connaître.
+
+**Sécurité.** Le jeton classique utilisé pour le push a été généré avec une
+expiration de 7 jours et le scope minimal nécessaire (`repo`). Il n'a été
+utilisé qu'en ligne de commande (jamais écrit dans un fichier suivi par
+Git), et sa révocation manuelle après usage est recommandée à la personne
+qui l'a généré.
+
+---
+
 ## Dette technique connue
 
 Un journal d'audit qui ne consigne que les réussites est un document de
@@ -582,7 +656,7 @@ communication, pas un outil d'ingénierie. Voici ce qui **manque encore**.
 
 ## Historique des révisions
 
-| Date       | Événement                                                                                                                                                                                                                                                                                                                                                                                                  |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-09-05 | Création du dépôt · AUD-001 à AUD-009 · dette DT-01 à DT-06 ouverte                                                                                                                                                                                                                                                                                                                                        |
-| 2026-09-06 | AUD-010 à AUD-014 · premier module de cours (`courses/02-systeme-de-types`) et `@atlas/contracts` validés de bout en bout · dépôt Git initialisé · site bilingue FR/EN construit avec succès (build complet, deux locales, liens croisés vérifiés) · `verify` (apprenant) et `verify:content` (contributeur) distingués · Module 01 (Toolchain) rédigé, exemples vérifiés en direct (`node`, `tsx`, `tsc`) |
+| Date       | Événement                                                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-09-05 | Création du dépôt · AUD-001 à AUD-009 · dette DT-01 à DT-06 ouverte                                                                                                                                                                                                                                                                                                                                              |
+| 2026-09-06 | AUD-010 à AUD-015 · premier module de cours (`courses/02-systeme-de-types`) et `@atlas/contracts` validés de bout en bout · Parties I à III et 3 mini-projets terminés · site bilingue FR/EN construit avec succès · `verify` (apprenant) et `verify:content` (contributeur) distingués · **dépôt publié sur GitHub** (`patrick26-Developer/Learning-TypeScript`), AUD-011 résolu, mise en place de GitHub Pages |

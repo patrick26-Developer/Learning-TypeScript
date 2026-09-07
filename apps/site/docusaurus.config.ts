@@ -4,11 +4,11 @@ import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 // ---------------------------------------------------------------------------
-// À PERSONNALISER lors de la mise en ligne : ces deux constantes pilotent
-// toutes les URL générées (liens « Modifier cette page », plan du site, etc.).
+// Ces deux constantes pilotent toutes les URL générées (liens « Modifier
+// cette page », plan du site, lien GitHub de la barre de navigation, etc.).
 // ---------------------------------------------------------------------------
-const GITHUB_ORG = 'typescript-atlas';
-const GITHUB_REPO = 'typescript-atlas';
+const GITHUB_ORG = 'patrick26-Developer';
+const GITHUB_REPO = 'Learning-TypeScript';
 const REPO_URL = `https://github.com/${GITHUB_ORG}/${GITHUB_REPO}`;
 
 const config: Config = {
@@ -20,10 +20,16 @@ const config: Config = {
   favicon: 'img/favicon.svg',
 
   // -------------------------------------------------------------------------
-  // Déploiement
+  // Déploiement — GitHub Pages, sous forme de « project page ».
+  //
+  // Un compte personnel (pas une organisation) héberge une page UTILISATEUR
+  // à la racine (https://<user>.github.io) UNIQUEMENT si le dépôt s'appelle
+  // exactement `<user>.github.io`. Ce n'est pas notre cas ici : ce dépôt
+  // s'appelle `Learning-TypeScript`, donc GitHub Pages le sert comme une
+  // « project page », sous un sous-chemin — d'où le `baseUrl` non trivial.
   // -------------------------------------------------------------------------
-  url: `https://${GITHUB_ORG}.github.io`,
-  baseUrl: '/',
+  url: 'https://patrick26-developer.github.io',
+  baseUrl: `/${GITHUB_REPO}/`,
   organizationName: GITHUB_ORG,
   projectName: GITHUB_REPO,
   trailingSlash: false,
@@ -86,12 +92,10 @@ const config: Config = {
           routeBasePath: '/', // La documentation EST le site : pas de préfixe /docs.
           sidebarPath: './sidebars.ts',
           editUrl: `${REPO_URL}/tree/main/apps/site/`,
-          // « Dernière mise à jour » lit l'historique Git du fichier — donc
-          // exige au moins un commit. Tant que le dépôt local n'a aucun
-          // commit, `git log` échoue et fait échouer TOUT le build (pas
-          // seulement cette fonctionnalité). Repassez à `true` après le
-          // premier commit (voir AUD-011 dans le journal d'audit).
-          showLastUpdateTime: false,
+          // Affiche « Dernière mise à jour » : un apprenant doit savoir si
+          // ce qu'il lit est récent. Exige au moins un commit Git dans
+          // l'historique du fichier — c'est le cas depuis AUD-011.
+          showLastUpdateTime: true,
           showLastUpdateAuthor: false,
           breadcrumbs: true,
         },

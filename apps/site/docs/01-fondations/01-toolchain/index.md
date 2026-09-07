@@ -236,7 +236,7 @@ détail complet, avec le message d'erreur exact et la démonstration.
 
 Ce dépôt documente **chaque option activée**, avec le bug précis qu'elle
 prévient, directement dans
-[`packages/tsconfig/base.json`](https://github.com/typescript-atlas/typescript-atlas/blob/main/packages/tsconfig/base.json).
+[`packages/tsconfig/base.json`](https://github.com/patrick26-Developer/Learning-TypeScript/blob/main/packages/tsconfig/base.json).
 Allez le lire : un fichier de configuration commenté ligne par ligne est
 lui-même un document pédagogique.
 

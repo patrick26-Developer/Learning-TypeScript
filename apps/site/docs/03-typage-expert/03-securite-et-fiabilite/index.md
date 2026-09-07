@@ -335,7 +335,7 @@ deux questions différentes (module 00, module 08).
 Un routeur qui déduit les paramètres nommés d'une route depuis sa chaîne
 d'URL — l'application directe des littéraux de gabarit et de `infer` du
 module 09. Le code se trouve dans `projects/mini/typed-router/` — voir son
-[README](https://github.com/typescript-atlas/typescript-atlas/tree/main/projects/mini/typed-router)
+[README](https://github.com/patrick26-Developer/Learning-TypeScript/tree/main/projects/mini/typed-router)
 pour démarrer.
 
 Ce mini-projet clôt la Partie III — et avec elle, la moitié « langage » de

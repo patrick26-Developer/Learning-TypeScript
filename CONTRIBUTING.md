@@ -6,8 +6,8 @@ correction, un exercice ou une traduction.
 ## Avant de commencer
 
 ```bash
-git clone https://github.com/typescript-atlas/typescript-atlas.git
-cd typescript-atlas
+git clone https://github.com/patrick26-Developer/Learning-TypeScript.git
+cd Learning-TypeScript
 pnpm install
 pnpm doctor
 ```

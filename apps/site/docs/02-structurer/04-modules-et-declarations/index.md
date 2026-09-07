@@ -207,5 +207,5 @@ seulement l'affirmation, de ce qu'un import non déclaré dans son propre
 Un parseur CSV typé par son schéma : vous déclarez les colonnes, la
 bibliothèque en déduit le type des lignes. Le code se trouve dans
 `projects/mini/csv-forge/` — voir son
-[README](https://github.com/typescript-atlas/typescript-atlas/tree/main/projects/mini/csv-forge)
+[README](https://github.com/patrick26-Developer/Learning-TypeScript/tree/main/projects/mini/csv-forge)
 pour démarrer.

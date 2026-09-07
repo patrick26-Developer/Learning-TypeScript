@@ -1,0 +1,80 @@
+name: Déployer le site sur GitHub Pages
+
+# ---------------------------------------------------------------------------
+# Ce workflow construit apps/site/ (Docusaurus, bilingue FR/EN) et publie le
+# résultat sur GitHub Pages à chaque push sur `main`.
+#
+# Prérequis à activer UNE SEULE FOIS, manuellement, côté propriétaire du
+# dépôt (Actions ne peut pas le faire à sa place) :
+#   Settings → Pages → Build and deployment → Source → "GitHub Actions"
+# Sans ce réglage, ce workflow s'exécute mais rien n'est publié.
+# ---------------------------------------------------------------------------
+
+on:
+  push:
+    branches: [main]
+    # Ne se déclenche que si le site (ou ce qu'il embarque) a changé —
+    # inutile de reconstruire et redéployer le site pour un exercice modifié
+    # dans courses/, par exemple.
+    paths:
+      - 'apps/site/**'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - '.github/workflows/deploy-docs.yml'
+  # Permet aussi un déclenchement manuel depuis l'onglet Actions de GitHub.
+  workflow_dispatch:
+
+# GitHub Pages exige ces deux permissions précises pour le jeton du workflow.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# N'autorise qu'un seul déploiement à la fois ; un déploiement en cours n'est
+# JAMAIS annulé en plein transfert (`cancel-in-progress: false`) pour éviter
+# de publier un site à moitié téléversé.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Activer Corepack (pnpm épinglé par packageManager)
+        run: corepack enable
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Installer les dépendances
+        run: pnpm install --frozen-lockfile
+
+      - name: Construire le site (FR + EN)
+        run: pnpm --filter @atlas/site build
+
+      - name: Configurer GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empaqueter l'artefact de build
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/site/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer sur GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
