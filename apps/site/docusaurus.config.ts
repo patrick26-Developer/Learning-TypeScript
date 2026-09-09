@@ -83,6 +83,32 @@ const config: Config = {
   },
   themes: ['@docusaurus/theme-mermaid'],
 
+  // ---------------------------------------------------------------------
+  // Typographie — Inter, la police d'interface. `preconnect` avant le CSS
+  // lui-même : le navigateur ouvre la connexion à fonts.gstatic.com pendant
+  // qu'il télécharge encore la feuille de style, au lieu d'attendre.
+  // ---------------------------------------------------------------------
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://fonts.gstatic.com',
+        crossorigin: 'anonymous',
+      },
+    },
+  ],
+  stylesheets: [
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap',
+      type: 'text/css',
+    },
+  ],
+
   presets: [
     [
       'classic',
@@ -143,7 +169,7 @@ const config: Config = {
     announcementBar: {
       id: 'atlas-wip-2026',
       content:
-        '⭐ Formation en construction ouverte — le programme complet est publié, les modules arrivent progressivement.',
+        'Formation en construction ouverte — le programme complet est publié, les modules arrivent progressivement.',
       backgroundColor: '#1e293b',
       textColor: '#e2e8f0',
       isCloseable: true,

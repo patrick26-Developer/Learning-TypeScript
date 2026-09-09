@@ -4,7 +4,18 @@
    Docusaurus expose son thème via des variables CSS (Infima). On ne surcharge
    donc presque aucune règle : on redéfinit les variables, et tout le site
    suit — y compris les composants qu'on n'a pas écrits.
+
+   Direction : sobre, technique, dense en contenu mais jamais chargée —
+   dans l'esprit des sites de documentation des grands projets open source
+   (Vite, React Native). Pas d'émoji comme élément d'interface : les icônes
+   sont des tracés SVG monochromes, la couleur signale, elle ne décore pas.
    ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   0. Typographie — Inter pour l'interface, JetBrains Mono pour le code.
+   Chargée en amont dans docusaurus.config.ts (stylesheets + preconnect),
+   ce fichier ne fait que la référencer.
+   -------------------------------------------------------------------------- */
 
 /* --------------------------------------------------------------------------
    1. Palette — thème clair
@@ -22,21 +33,31 @@
 
   --ifm-code-font-size: 92%;
   --ifm-font-family-base:
-    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
   --ifm-font-family-monospace:
     'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
 
   --ifm-heading-font-weight: 700;
+  --ifm-heading-line-height: 1.25;
   --ifm-line-height-base: 1.7;
+  --ifm-font-weight-semibold: 600;
+
+  /* Coins plus nets, plus « produit », moins « site perso ». */
+  --ifm-global-radius: 8px;
+  --ifm-button-border-radius: 6px;
+  --ifm-code-border-radius: 6px;
 
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.08);
 
   /* Couleurs propres à Atlas, réutilisées par les composants maison. */
   --atlas-accent: #f7b93e;
   --atlas-surface: #f8fafc;
+  --atlas-surface-raised: #ffffff;
   --atlas-border: #e2e8f0;
   --atlas-ok: #16a34a;
   --atlas-error: #dc2626;
+  --atlas-fg-muted: #56647a;
+  --atlas-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 8px 24px -12px rgba(15, 23, 42, 0.12);
 }
 
 /* --------------------------------------------------------------------------
@@ -53,16 +74,19 @@
   --ifm-color-primary-lighter: #94c1ef;
   --ifm-color-primary-lightest: #bed9f5;
 
-  --ifm-background-color: #0f172a;
-  --ifm-background-surface-color: #1e293b;
+  --ifm-background-color: #0b1220;
+  --ifm-background-surface-color: #121a2c;
 
   --docusaurus-highlighted-code-line-bg: rgba(255, 255, 255, 0.1);
 
   --atlas-accent: #fbbf24;
-  --atlas-surface: #1e293b;
-  --atlas-border: #334155;
+  --atlas-surface: #121a2c;
+  --atlas-surface-raised: #17213a;
+  --atlas-border: #263149;
   --atlas-ok: #4ade80;
   --atlas-error: #f87171;
+  --atlas-fg-muted: #94a3b8;
+  --atlas-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
 }
 
 /* --------------------------------------------------------------------------
@@ -85,6 +109,12 @@
   margin-top: 2.6rem;
   padding-top: 0.6rem;
   border-top: 1px solid var(--atlas-border);
+  letter-spacing: -0.01em;
+}
+
+.markdown h1,
+.markdown h3 {
+  letter-spacing: -0.01em;
 }
 
 .markdown h3 {
@@ -95,10 +125,19 @@
 .markdown table {
   display: table;
   width: 100%;
+  box-shadow: var(--atlas-shadow);
+  border-radius: var(--ifm-global-radius);
+  overflow: hidden;
 }
 
 .markdown table th {
   background-color: var(--atlas-surface);
+}
+
+/* Blocs de code : bordure fine et ombre légère plutôt qu'un simple encart —
+   un détail qui distingue une doc soignée d'une doc générique. */
+div[class^='codeBlockContainer'] {
+  box-shadow: var(--atlas-shadow);
 }
 
 /* --------------------------------------------------------------------------
@@ -146,4 +185,31 @@
 
 [data-theme='dark'] .header-github-link::before {
   filter: invert(1);
+}
+
+/* --------------------------------------------------------------------------
+   6. Navbar & bandeau d'annonce — finition premium
+   -------------------------------------------------------------------------- */
+.navbar {
+  box-shadow: 0 1px 0 var(--atlas-border);
+  -webkit-backdrop-filter: saturate(180%) blur(8px);
+  backdrop-filter: saturate(180%) blur(8px);
+}
+
+.navbar__brand {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.announcementBar {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   7. Admonitions — un peu plus nettes que le style Infima par défaut.
+   -------------------------------------------------------------------------- */
+.theme-admonition {
+  border-radius: var(--ifm-global-radius);
+  box-shadow: var(--atlas-shadow);
 }

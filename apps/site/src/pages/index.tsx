@@ -3,7 +3,7 @@ import Translate, { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import type { ReactNode, SVGProps } from 'react';
 
 import styles from './index.module.css';
 
@@ -19,7 +19,92 @@ import styles from './index.module.css';
  *
  * Écrire du texte en dur ici le rendrait invisible à l'extraction :
  * il resterait en français sur la version anglaise du site.
+ *
+ * NOTE SUR LES ICÔNES
+ * --------------------
+ * Aucun émoji comme élément d'interface : chaque icône est un tracé SVG
+ * "outline" (24×24, trait de 1,75, `currentColor`) défini une seule fois
+ * ci-dessous et réutilisé. Même famille visuelle partout, adaptable au
+ * thème clair/sombre sans image bitmap.
  */
+
+// ---------------------------------------------------------------------------
+// Icônes — traits fins, un seul jeu de props partagé.
+// ---------------------------------------------------------------------------
+type IconProps = SVGProps<SVGSVGElement>;
+
+const iconBaseProps = {
+  viewBox: '0 0 24 24',
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 1.75,
+  strokeLinecap: 'round' as const,
+  strokeLinejoin: 'round' as const,
+  'aria-hidden': true,
+};
+
+function IconCode(props: IconProps): ReactNode {
+  return (
+    <svg {...iconBaseProps} {...props}>
+      <path d="m9 8-4 4 4 4M15 8l4 4-4 4M13 5l-2 14" />
+    </svg>
+  );
+}
+
+function IconCheckShield(props: IconProps): ReactNode {
+  return (
+    <svg {...iconBaseProps} {...props}>
+      <path d="M12 3 4.5 5.6v5.6c0 4.6 3.1 7.9 7.5 9.3 4.4-1.4 7.5-4.7 7.5-9.3V5.6L12 3Z" />
+      <path d="m9 12.5 2 2 4-4.5" />
+    </svg>
+  );
+}
+
+function IconLock(props: IconProps): ReactNode {
+  return (
+    <svg {...iconBaseProps} {...props}>
+      <rect x="4.5" y="11" width="15" height="9.5" rx="2" />
+      <path d="M8 11V7.5a4 4 0 0 1 8 0V11" />
+    </svg>
+  );
+}
+
+function IconLayers(props: IconProps): ReactNode {
+  return (
+    <svg {...iconBaseProps} {...props}>
+      <path d="M12 3.5 3.5 8 12 12.5 20.5 8 12 3.5Z" />
+      <path d="m3.5 12 8.5 4.5L20.5 12" />
+      <path d="m3.5 16 8.5 4.5 8.5-4.5" />
+    </svg>
+  );
+}
+
+function IconCompass(props: IconProps): ReactNode {
+  return (
+    <svg {...iconBaseProps} {...props}>
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="m14.5 9.5-1.8 5.2-5.2 1.8 1.8-5.2 5.2-1.8Z" />
+    </svg>
+  );
+}
+
+function IconClipboard(props: IconProps): ReactNode {
+  return (
+    <svg {...iconBaseProps} {...props}>
+      <rect x="5.5" y="5" width="13" height="16" rx="2" />
+      <path d="M9 5V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1" />
+      <path d="M9 11h6M9 15h6M9 19h3" />
+    </svg>
+  );
+}
+
+function IconArrowRight(props: IconProps): ReactNode {
+  return (
+    <svg {...iconBaseProps} strokeWidth={2} {...props}>
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Bandeau d'accroche
@@ -28,6 +113,10 @@ function Hero(): ReactNode {
   return (
     <header className={styles.hero}>
       <div className="container">
+        <p className={styles.heroEyebrow}>
+          <Translate id="home.hero.eyebrow">Formation gratuite · Bilingue FR/EN</Translate>
+        </p>
+
         {/* Balise native plutôt que le composant `@theme/Heading` : cette
             page d'accueil n'a pas besoin des ancres de sommaire (TOC) que
             fournit ce composant sur les pages de documentation. */}
@@ -45,14 +134,15 @@ function Hero(): ReactNode {
 
         <div className={styles.heroButtons}>
           <Link className="button button--primary button--lg" to="/orientation-parcours">
-            <Translate id="home.hero.cta.primary">Par où commencer ?</Translate>
+            <Translate id="home.hero.cta.primary">Par où commencer</Translate>
           </Link>
-          <Link className="button button--secondary button--lg" to="/plan-de-formation">
+          <Link className={clsx('button button--lg', styles.buttonGhost)} to="/plan-de-formation">
             <Translate id="home.hero.cta.secondary">Voir le programme</Translate>
+            <IconArrowRight className={styles.buttonIcon} />
           </Link>
         </div>
 
-        <div className={styles.stats}>
+        <dl className={styles.stats}>
           <Stat value="21" label={translate({ id: 'home.stats.modules', message: 'modules' })} />
           <Stat value="6" label={translate({ id: 'home.stats.mini', message: 'mini-projets' })} />
           <Stat
@@ -60,14 +150,10 @@ function Hero(): ReactNode {
             label={translate({ id: 'home.stats.capstones', message: 'projets finaux' })}
           />
           <Stat
-            value="120 h+"
+            value="120h+"
             label={translate({ id: 'home.stats.hours', message: 'de pratique' })}
           />
-          <Stat
-            value="FR / EN"
-            label={translate({ id: 'home.stats.langs', message: 'bilingue' })}
-          />
-        </div>
+        </dl>
       </div>
     </header>
   );
@@ -76,8 +162,8 @@ function Hero(): ReactNode {
 function Stat({ value, label }: { value: string; label: string }): ReactNode {
   return (
     <div className={styles.stat}>
-      <span className={styles.statValue}>{value}</span>
-      <span className={styles.statLabel}>{label}</span>
+      <dt className={styles.statValue}>{value}</dt>
+      <dd className={styles.statLabel}>{label}</dd>
     </div>
   );
 }
@@ -88,7 +174,7 @@ function Stat({ value, label }: { value: string; label: string }): ReactNode {
 function Differentiators(): ReactNode {
   const items = [
     {
-      icon: '🔬',
+      Icon: IconCode,
       title: translate({ id: 'home.diff.1.title', message: 'Chaque ligne est expliquée' }),
       text: translate({
         id: 'home.diff.1.text',
@@ -97,7 +183,7 @@ function Differentiators(): ReactNode {
       }),
     },
     {
-      icon: '🧪',
+      Icon: IconCheckShield,
       title: translate({ id: 'home.diff.2.title', message: 'Le code est réellement testé' }),
       text: translate({
         id: 'home.diff.2.text',
@@ -106,7 +192,7 @@ function Differentiators(): ReactNode {
       }),
     },
     {
-      icon: '🔐',
+      Icon: IconLock,
       title: translate({ id: 'home.diff.3.title', message: 'Strict, sûr, fiable' }),
       text: translate({
         id: 'home.diff.3.text',
@@ -115,7 +201,7 @@ function Differentiators(): ReactNode {
       }),
     },
     {
-      icon: '🏗️',
+      Icon: IconLayers,
       title: translate({ id: 'home.diff.4.title', message: 'Des projets, pas des démos' }),
       text: translate({
         id: 'home.diff.4.text',
@@ -124,7 +210,7 @@ function Differentiators(): ReactNode {
       }),
     },
     {
-      icon: '🧭',
+      Icon: IconCompass,
       title: translate({ id: 'home.diff.5.title', message: 'Cinq parcours, pas un seul' }),
       text: translate({
         id: 'home.diff.5.text',
@@ -133,7 +219,7 @@ function Differentiators(): ReactNode {
       }),
     },
     {
-      icon: '📋',
+      Icon: IconClipboard,
       title: translate({ id: 'home.diff.6.title', message: 'Les coulisses sont ouvertes' }),
       text: translate({
         id: 'home.diff.6.text',
@@ -146,6 +232,9 @@ function Differentiators(): ReactNode {
   return (
     <section className={clsx(styles.section, styles.sectionAlt)}>
       <div className="container">
+        <p className={styles.sectionEyebrow}>
+          <Translate id="home.diff.eyebrow">Pourquoi celle-ci</Translate>
+        </p>
         <h2 className={styles.sectionTitle}>
           <Translate id="home.diff.title">Ce qui change ici</Translate>
         </h2>
@@ -156,13 +245,13 @@ function Differentiators(): ReactNode {
         </p>
 
         <div className={styles.cards}>
-          {items.map((item) => (
-            <article key={item.title} className={styles.card}>
-              <div className={styles.cardIcon} aria-hidden="true">
-                {item.icon}
+          {items.map(({ Icon, title, text }) => (
+            <article key={title} className={styles.card}>
+              <div className={styles.cardIcon}>
+                <Icon />
               </div>
-              <h3 className={styles.cardTitle}>{item.title}</h3>
-              <p className={styles.cardText}>{item.text}</p>
+              <h3 className={styles.cardTitle}>{title}</h3>
+              <p className={styles.cardText}>{text}</p>
             </article>
           ))}
         </div>
@@ -177,7 +266,7 @@ function Differentiators(): ReactNode {
 function Curriculum(): ReactNode {
   const parts = [
     {
-      badge: 'M00 → M04',
+      badge: 'M00–M04',
       title: translate({ id: 'home.curr.1.title', message: 'Origines & Fondations' }),
       text: translate({
         id: 'home.curr.1.text',
@@ -186,7 +275,7 @@ function Curriculum(): ReactNode {
       }),
     },
     {
-      badge: 'M05 → M08',
+      badge: 'M05–M08',
       title: translate({ id: 'home.curr.2.title', message: 'Structurer le code' }),
       text: translate({
         id: 'home.curr.2.text',
@@ -195,7 +284,7 @@ function Curriculum(): ReactNode {
       }),
     },
     {
-      badge: 'M09 → M11',
+      badge: 'M09–M11',
       title: translate({ id: 'home.curr.3.title', message: 'Le niveau expert du typage' }),
       text: translate({
         id: 'home.curr.3.text',
@@ -204,7 +293,7 @@ function Curriculum(): ReactNode {
       }),
     },
     {
-      badge: 'M12 → M14',
+      badge: 'M12–M14',
       title: translate({ id: 'home.curr.4.title', message: 'Qualité & industrialisation' }),
       text: translate({
         id: 'home.curr.4.text',
@@ -213,7 +302,7 @@ function Curriculum(): ReactNode {
       }),
     },
     {
-      badge: 'M15 → M18',
+      badge: 'M15–M18',
       title: translate({ id: 'home.curr.5.title', message: 'Backend & APIs de production' }),
       text: translate({
         id: 'home.curr.5.text',
@@ -222,7 +311,7 @@ function Curriculum(): ReactNode {
       }),
     },
     {
-      badge: 'M19 → M20',
+      badge: 'M19–M20',
       title: translate({ id: 'home.curr.6.title', message: 'Frontend & projets finaux' }),
       text: translate({
         id: 'home.curr.6.text',
@@ -235,6 +324,9 @@ function Curriculum(): ReactNode {
   return (
     <section className={styles.section}>
       <div className="container">
+        <p className={styles.sectionEyebrow}>
+          <Translate id="home.curr.eyebrow">Le programme</Translate>
+        </p>
         <h2 className={styles.sectionTitle}>
           <Translate id="home.curr.title">Le parcours en six temps</Translate>
         </h2>
@@ -245,17 +337,17 @@ function Curriculum(): ReactNode {
           </Translate>
         </p>
 
-        <div>
+        <ol className={styles.track}>
           {parts.map((part) => (
-            <div key={part.badge} className={styles.track}>
+            <li key={part.badge} className={styles.trackItem}>
               <span className={styles.trackBadge}>{part.badge}</span>
               <div className={styles.trackBody}>
                 <strong>{part.title}</strong>
                 <span>{part.text}</span>
               </div>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );
@@ -267,19 +359,21 @@ function Curriculum(): ReactNode {
 function FinalCta(): ReactNode {
   return (
     <section className={clsx(styles.finalCta, styles.sectionAlt)}>
-      <h2 className={styles.sectionTitle}>
-        <Translate id="home.cta.title">Trois commandes et vous commencez</Translate>
-      </h2>
-      <p>
-        <Translate id="home.cta.text">
-          Le dépôt est public, la formation est gratuite, et tout fonctionne en local. Aucune
-          inscription.
-        </Translate>
-      </p>
-      <div className={styles.heroButtons}>
-        <Link className="button button--primary button--lg" to="/installation">
-          <Translate id="home.cta.button">Installer et démarrer</Translate>
-        </Link>
+      <div className="container">
+        <h2 className={styles.sectionTitle}>
+          <Translate id="home.cta.title">Trois commandes et vous commencez</Translate>
+        </h2>
+        <p className={styles.finalCtaText}>
+          <Translate id="home.cta.text">
+            Le dépôt est public, la formation est gratuite, et tout fonctionne en local. Aucune
+            inscription.
+          </Translate>
+        </p>
+        <div className={styles.heroButtons}>
+          <Link className="button button--primary button--lg" to="/installation">
+            <Translate id="home.cta.button">Installer et démarrer</Translate>
+          </Link>
+        </div>
       </div>
     </section>
   );
