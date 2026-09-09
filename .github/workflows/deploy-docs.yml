@@ -62,6 +62,11 @@ jobs:
 
       - name: Configurer GitHub Pages
         uses: actions/configure-pages@v5
+        with:
+          # Active GitHub Pages (source = GitHub Actions) tout seul si ce
+          # n'est pas déjà fait, plutôt que d'exiger un clic manuel unique
+          # dans Settings → Pages avant le tout premier déploiement.
+          enablement: true
 
       - name: Empaqueter l'artefact de build
         uses: actions/upload-pages-artifact@v3
