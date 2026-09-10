@@ -432,8 +432,7 @@ async function retryWithBackoff<T>(
 
 ## Étape suivante
 
-👉 **Module 13 — Tests, qualité, CI**
-_(en cours de rédaction)_
+👉 [Module 13 — Tests, qualité, CI](../01-tests-qualite-ci/index.md)
 
 Vous savez maintenant écrire de l'asynchrone fiable. Il reste à le
 **prouver** — avec des tests qui vérifient le comportement, et d'autres
