@@ -115,5 +115,5 @@ pnpm --filter @atlas/mini-typed-router lint
 
 ## Étape suivante
 
-👉 **Module 12 — Asynchrone typé, erreurs, concurrence, annulation**
-_(en cours de rédaction)_ — la Partie IV commence.
+👉 [Module 12 — Asynchrone typé, erreurs, concurrence, annulation](../../04-qualite-industrialisation/00-asynchrone-erreurs-concurrence/index.md)
+— la Partie IV commence.

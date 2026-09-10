@@ -1,0 +1,10 @@
+{
+  "label": "Partie IV — Qualité & industrialisation",
+  "position": 40,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "title": "Partie IV — Qualité & industrialisation",
+    "description": "Passer du langage à l'outillage professionnel : asynchrone typé et fiable, tests (y compris les types eux-mêmes), Docker et intégration continue. À la fin de cette partie, vous produisez votre premier artefact livrable de qualité professionnelle."
+  }
+}
