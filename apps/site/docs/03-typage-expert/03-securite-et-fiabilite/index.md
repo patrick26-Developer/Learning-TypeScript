@@ -330,13 +330,11 @@ deux questions différentes (module 00, module 08).
 
 ## Étape suivante
 
-👉 🛠️ **Mini-projet 3 — `typed-router`**
+👉 🛠️ **[Mini-projet 3 — `typed-router`](../04-mini-projet-typed-router/index.md)**
 
 Un routeur qui déduit les paramètres nommés d'une route depuis sa chaîne
 d'URL — l'application directe des littéraux de gabarit et de `infer` du
-module 09. Le code se trouve dans `projects/mini/typed-router/` — voir son
-[README](https://github.com/patrick26-Developer/Learning-TypeScript/tree/main/projects/mini/typed-router)
-pour démarrer.
+module 09.
 
 Ce mini-projet clôt la Partie III — et avec elle, la moitié « langage » de
 ce parcours. La Partie IV _(en cours de rédaction)_ passe du langage à

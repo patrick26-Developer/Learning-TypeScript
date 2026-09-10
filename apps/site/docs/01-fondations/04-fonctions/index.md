@@ -292,11 +292,8 @@ La variance explique, sans exception à mémoriser séparément :
 
 ## Étape suivante
 
-👉 🛠️ **Mini-projet 1 — `taskline`**
+👉 🛠️ **[Mini-projet 1 — `taskline`](../05-mini-projet-taskline/index.md)**
 
 Un gestionnaire de tâches en ligne de commande, sans dépendance externe.
 C'est ici que tout ce que vous avez appris dans la Partie I se rejoint pour
-la première fois dans un vrai programme. Le code se trouve dans
-`projects/mini/taskline/` à la racine du dépôt — voir son
-[README](https://github.com/patrick26-Developer/Learning-TypeScript/tree/main/projects/mini/taskline)
-pour démarrer.
+la première fois dans un vrai programme.

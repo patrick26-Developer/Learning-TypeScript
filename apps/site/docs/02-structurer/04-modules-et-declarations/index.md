@@ -202,10 +202,7 @@ seulement l'affirmation, de ce qu'un import non déclaré dans son propre
 
 ## Étape suivante
 
-👉 🛠️ **Mini-projet 2 — `csv-forge`**
+👉 🛠️ **[Mini-projet 2 — `csv-forge`](../05-mini-projet-csv-forge/index.md)**
 
 Un parseur CSV typé par son schéma : vous déclarez les colonnes, la
-bibliothèque en déduit le type des lignes. Le code se trouve dans
-`projects/mini/csv-forge/` — voir son
-[README](https://github.com/patrick26-Developer/Learning-TypeScript/tree/main/projects/mini/csv-forge)
-pour démarrer.
+bibliothèque en déduit le type des lignes.
